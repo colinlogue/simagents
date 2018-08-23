@@ -35,7 +35,7 @@ static void tradeWith(agent_t *ptr_a, agent_t *ptr_b) {
   bool a_has_bs_pref = (a.amts[b.pref] > 0);
   bool b_has_as_pref = (b.amts[a.pref] > 0);
 
-  int goods[3][3] = { {3, 2, 1}, {2, 3, 1}, {1, 2, 3} };
+  int goods[3][3] = { {3, 2, 1}, {2, 3, 0}, {1, 0, 3} };
   int third_good = goods[a.pref][b.pref];
   assert(third_good < 3);
 
@@ -48,11 +48,10 @@ static void tradeWith(agent_t *ptr_a, agent_t *ptr_b) {
     b.amts[b.pref]++;
     b.amts[a.pref]--;
     a.amts[a.pref]++;
-    return;
   }
 
   // if only one has pref, try to exchange for third good
-  if (a_has_bs_pref && b_has_third_good) {
+  else if (a_has_bs_pref && b_has_third_good) {
     a.amts[b.pref]--;
     b.amts[b.pref]++;
     b.amts[third_good]--;
@@ -63,6 +62,9 @@ static void tradeWith(agent_t *ptr_a, agent_t *ptr_b) {
     b.amts[a.pref]--;
     a.amts[a.pref]++;
   }
+
+  *ptr_a = a;
+  *ptr_b = b;
 };
 
 static int getTotalUtility(agent_t *agents, int n_agents) {
