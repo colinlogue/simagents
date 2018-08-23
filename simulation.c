@@ -7,6 +7,15 @@
 
 
 void runSimulation(sim_info_t *simu_ptr) {
+  /** /brief Handles the looping of a simulation for a number of turns
+    *        as specified in the sim_info_t.
+    *
+    * Params
+    * ------
+    * 
+    *
+  **/
+  
   sim_info_t simu = *simu_ptr;
   
   // first step is to call init function to set

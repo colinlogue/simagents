@@ -37,12 +37,4 @@ void simtest_step(sim_info_t *simu_ptr) {
   simtest_print(&simu);
 };
 
-sim_t simtest_declare() {
-  sim_t simtest;
-  simtest.init_f = simtest_init;
-  simtest.step_f = simtest_step;
-  simtest.agent_size = sizeof(simtest_agent_t);
-  return simtest;
-};
-
 sim_t simtest = {simtest_init, simtest_step, sizeof(simtest_agent_t)};

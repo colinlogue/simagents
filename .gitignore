@@ -5,3 +5,5 @@
 *.o
 *.exe
 *.stackdump
+
+myvenv/
