@@ -9,7 +9,7 @@ To add a new model:
 1. create a .c file in the models directory
 2. In that file, add (at a minimum) an agent type definition, a function to call to initialize the model at the start of the simulation and another function that is called at each time step.
 3. Add `#include "../simulation.h"` to the top of the file in order to use the sim_t type.
-4. Initialize a sim_t instance with the init and step functions and the size of the agent type.
+4. Initialize a sim_t instance (outside of any functions so that it can be externally linked) with the init and step functions and the size of the agent type.
 5. Declare the sim_t instance in the models.h file.
 6. Edit the get_sim_from_str function in models.c to recognize the label for your model when it is called in argv and return the sim_t instance from your model file.
 
