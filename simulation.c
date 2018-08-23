@@ -28,13 +28,13 @@ int main(int argc, char **argv) {
   // set random seed
   srand(time(0));
 
-  char *model = argv[1];
+  sim_t model = get_sim_from_str(argv[1]);
   int n_agents = atoi(argv[2]);
   int n_steps = atoi(argv[3]);
 
   // create sim_info_t
   sim_info_t simu;
-  simu.sim = simtest;
+  simu.sim = model;
   simu.n_agents = n_agents;
   simu.n_steps = n_steps;
   simu.current_step = 0;

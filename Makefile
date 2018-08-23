@@ -1,5 +1,5 @@
 P=simulation
-OBJECTS= utils/shuffle.o $(patsubst %.c, %.o, $(wildcard models/*.c))
+OBJECTS= $(patsubst %.c, %.o, $(wildcard models/*.c)) $(patsubst %.c, %.o, $(wildcard utils/*.c))
 CFLAGS= -g -Wall
 LDLIBS=
 CC=gcc -std=gnu11
