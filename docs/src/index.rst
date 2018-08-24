@@ -11,6 +11,7 @@ Welcome to simagents's documentation!
    
    overview
    models/threegoods
+   models/evolearn
 
 
 
