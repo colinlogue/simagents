@@ -10,8 +10,6 @@ void runSimulation(sim_info_t *simu_ptr) {
   /** /brief Handles the looping of a simulation for a number of turns
     *        as specified in the sim_info_t.
     *
-    * Params
-    * ------
     * 
     *
   **/

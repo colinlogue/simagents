@@ -7,4 +7,4 @@
 *.stackdump
 
 myvenv/
-docs/_build/
+_build/
