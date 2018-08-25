@@ -24,7 +24,6 @@ Agent actions
 3. Sell - adds the agent to the list of sellers for this turn.
 4. Buy - adds the agent to the list of buyers for this turn.
 
-
 +----------+---------------+
 | Tree age | Food produced |
 +==========+===============+
@@ -37,3 +36,6 @@ Agent actions
 | 4+ turns | 5 food        |
 +----------+---------------+
 
+Selling and buying
+------------------
+Sellers set the minimum price they will sell for and buyers set the maximum price they will buy for. There are 
