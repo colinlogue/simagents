@@ -1,0 +1,11 @@
+static const int STOCKPILE_LEVELS = 5;
+static const int WALLET_LEVELS = 5;
+static const int TREE_LEVELS = 5;
+static const int N_TREES = 4;
+static const int MAX_EXPLORE = 50;
+static const int N_ACTIONS = 4;
+static const int N_AGENTS = 100;
+static const int N_GENERATIONS = 1;
+static const int GEN_STEPS = 10;
+static const int BUYSELL_LEVELS = 5;
+static const int N_MARKET_ACTIONS = 5;

@@ -1,5 +1,5 @@
 P=simulation
-OBJECTS= $(patsubst %.c, %.o, $(wildcard models/*.c)) $(patsubst %.c, %.o, $(wildcard utils/*.c))
+OBJECTS= $(wildcard bin/*.o)
 CFLAGS= -ggdb -Wall
 LDLIBS=
 CC=gcc -std=gnu11
@@ -7,7 +7,6 @@ CC=gcc -std=gnu11
 
 $(P): $(OBJECTS)
 
-utils/%.o: utils/%.c
+bin/%.o: utils/%.c
 
-models/%.o: models/%.c
-
+bin/%.o: models/%/model.c

@@ -7,21 +7,10 @@
   *
 **/
 
-#include <assert.h>
-#include <stdio.h>
-#include <stdbool.h>
-#include "../simulation.h"
-#include "../utils/shuffle.h"
+#include "header.c"
 
-// constants
-static const int MIN_AMT = 0;
-static const int MAX_AMT = 4;
-
-typedef struct agent {
-  int id;
-  int amts[3];
-  int pref;
-} agent_t;
+// split different function into differnt files, combine here
+#include "params.c"
 
 static void tradeWith(agent_t *ptr_a, agent_t *ptr_b) {
   agent_t a = *ptr_a;
@@ -75,7 +64,7 @@ static int getTotalUtility(agent_t *agents, int n_agents) {
   return total_utility;
 };
 
-static void sim_init(sim_info_t *simu) {
+static void sim_init(sim_t *simu) {
   // init agents
   agent_t *agents = simu->agents;
   for (int i = 0; i < simu->n_agents; i++) {
@@ -89,7 +78,7 @@ static void sim_init(sim_info_t *simu) {
   } // each gets a unique id, a random pref, and a random amt of each item
 };
 
-static void sim_step(sim_info_t *simu) {
+static void sim_step(sim_t *simu) {
   agent_t *agents = simu->agents;
   
   // shuffle agents
@@ -105,4 +94,4 @@ static void sim_step(sim_info_t *simu) {
   printf("totaly utility after step %i: %i\n", simu->current_step, getTotalUtility(agents, simu->n_agents));
 };
 
-sim_t threegoods = {sim_init, sim_step, sizeof(agent_t)};
+model_t threegoods = {sim_init, sim_step, sizeof(agent_t)};

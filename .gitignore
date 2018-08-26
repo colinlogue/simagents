@@ -6,5 +6,5 @@
 *.exe
 *.stackdump
 
-myvenv/
+venv/
 _build/

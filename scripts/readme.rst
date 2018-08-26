@@ -1,0 +1,1 @@
+This folder is for python scripts to make things easier.
