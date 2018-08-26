@@ -1,12 +1,18 @@
-P=simulation
-OBJECTS= $(wildcard bin/*.o)
-CFLAGS= -ggdb -Wall
-LDLIBS=
-CC=gcc -std=gnu11
+P = simagents
+OBJECTS = $(MODELS) models/model_list.c
+CFLAGS = -ggdb -Wall
+LDLIBS =
+CC = gcc -std=gnu11
+MODELS = $(patsubst models/%/model.c, bin/models/%.o, $(wildcard models/*/model.c))
+UTILS = $(wildcard bin/utils/*.o)
 
 
-$(P): $(OBJECTS)
+all: update $(P)
 
-bin/%.o: utils/%.c
+$(P): $(OBJECTS) $(UTILS)
 
-bin/%.o: models/%/model.c
+bin/models/%.o:
+	cd models/$(notdir $(basename $@)) && make
+
+update:
+	python scripts/update_models.py

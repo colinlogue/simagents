@@ -5,7 +5,7 @@
 #include "simagents.h"
 
 
-void runSimulation(sim_t *simu_ptr) {
+void runSimulation(sim_t *sim_p) {
   /** /brief Handles the looping of a simulation for a number of turns
     *        as specified in the sim_t.
     *
@@ -14,10 +14,10 @@ void runSimulation(sim_t *simu_ptr) {
   **/
   
   // first step is to call init function to set
-  simu.sim.init_f(simu_ptr);
-  while (simu_ptr->current_step < simu_ptr->n_steps) {
-    simu_ptr->sim.step_f(simu_ptr);
-    simu_ptr->current_step++;
+  sim_p->sim.init_f(sim_p);
+  while (sim_p->current_step < sim_p->n_steps) {
+    sim_p->sim.step_f(sim_p);
+    sim_p->current_step++;
   };
 };
 
@@ -32,7 +32,7 @@ int main(int argc, char **argv) {
   // set random seed
   srand(time(0));
 
-  model_t model = get_sim_from_str(argv[1]);
+  model_t model = threegoods_model;
   int n_agents = atoi(argv[2]);
   int n_steps = atoi(argv[3]);
 

@@ -7,10 +7,14 @@
   *
 **/
 
-#include "header.c"
 
-// split different function into differnt files, combine here
+#include "headers.h"
+
+
 #include "params.c"
+
+
+
 
 static void tradeWith(agent_t *ptr_a, agent_t *ptr_b) {
   agent_t a = *ptr_a;
@@ -94,4 +98,5 @@ static void sim_step(sim_t *simu) {
   printf("totaly utility after step %i: %i\n", simu->current_step, getTotalUtility(agents, simu->n_agents));
 };
 
-model_t threegoods = {sim_init, sim_step, sizeof(agent_t)};
+
+extern model_t threegoods_model = {sim_init, sim_step, sizeof(agent_t)};

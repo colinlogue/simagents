@@ -1,9 +1,11 @@
 import os
 
+def get_model_labels():
+	# returns list of all subdirectories in models/
+	return [x for x in os.listdir('models') if os.path.isdir(os.path.join('models', x))]
 
 def update_models():
-	# get a list of all subdirectories in models/
-	labels = [x for x in os.listdir('models') if os.path.isdir(os.path.join('models', x))]
+	labels = get_model_labels()
 
 	# add the list of models into the template
 	with open('scripts/models_h_template.h', 'r') as template_f:
@@ -11,11 +13,12 @@ def update_models():
 
 	add_labels = ''
 	for label in labels:
-		add_labels += f'model_t {label};\n'
+		add_labels += 'model_t <<LABEL>>_model;\n'.replace('<<LABEL>>', label)
 
 	# write to destination file
 	with open('models/models.h', 'w') as dest_f:
-		dest_f.write(template)
+		dest_f.write(template.replace('<<MODELS>>', add_labels))
+
 
 if __name__ == "__main__":
 	update_models()

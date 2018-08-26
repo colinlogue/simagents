@@ -1,10 +1,17 @@
 
 
 *~
-#*#
 *.o
 *.exe
 *.stackdump
 
+bin/
 venv/
+
+# generated files
+models/models.h
+models/model_list.c
 _build/
+
+__pycache__/
+*.pyc

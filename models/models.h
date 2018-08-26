@@ -5,9 +5,8 @@
 
 #include "../simagents.h"
 
-model_t evo01;
-model_t simtest;
-model_t threegoods;
+model_t evo01_model;
+model_t threegoods_model;
 
 
 #endif

@@ -302,11 +302,10 @@ static int do_the_thing() {
   printf("Simulation complete.\n");
 };
 
-static sim_init() {
-
+static void init_f(sim_t *sim_p) {
 };
 
-extern model_t evo01_model;
-evo01_model.init_f = sim_init(),
-evo01_model.step_f = sim_step(),
-evo01_model.agent_size = sizeof(agent_t)
+static void step_f(sim_t *sim_p) {
+};
+
+extern model_t evo01_model = {init_f, step_f, sizeof(agent_t)};

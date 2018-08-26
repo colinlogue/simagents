@@ -4,8 +4,8 @@
 #define SIMULATION_H
 
 typedef struct {
-  void (*init_f)(void *simu); // these are actually pointers to sim_t but it hasn't been declared yet
-  void (*step_f)(void *simu); // not sure what the best way to do this is?
+  void (*init_f)(void *sim_p); // these are actually pointers to sim_t but it hasn't been declared yet
+  void (*step_f)(void *sim_p); // not sure what the best way to do this is?
   size_t agent_size;
 } model_t;
 

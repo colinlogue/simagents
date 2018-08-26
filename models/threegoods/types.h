@@ -1,5 +1,5 @@
-#ifndef THREEGOODS_TYPES_H
-#define THREEGOODS_TYPES_H
+#ifndef threegoods_TYPES_H
+#define threegoods_TYPES_H
 
 typedef struct agent {
   int id;

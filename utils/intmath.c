@@ -1,4 +1,4 @@
-int power(int root, int exp) {
+extern int power(int root, int exp) {
   int val = 1;
   for (int i = 0; i < exp; i++) {
     val *= root;
@@ -6,10 +6,10 @@ int power(int root, int exp) {
   return val;
 };
 
-int max(int a, int b) {
+extern int max(int a, int b) {
   return (a > b) ? a : b;
 };
 
-int min(int a, int b) {
+extern int min(int a, int b) {
   return (a < b) ? a : b;
 };
