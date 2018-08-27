@@ -3,14 +3,14 @@
 #include <assert.h> // assert
 #include <string.h> // memcpy
 
-int randRange(int start, int end) {
+extern int randRange(int start, int end) {
   /** Returns a random number in the range (start, end] **/
   int len = end - start;
   assert(len > 0); // end must be greater than start
   return rand() % len;
 };
 
-void shuffleArray(void *array_ptr, int array_len, size_t item_size) {
+extern void shuffleArray(void *array_ptr, int array_len, size_t item_size) {
   int current_idx = array_len - 1;
   void *current_ptr, *swap_ptr;
   int swap_idx;
