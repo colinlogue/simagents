@@ -11,5 +11,5 @@ TDL: better param passing from shell
 
 ## Creating a new model
 There is a python script for initializing a new model in the models directory.
-Run `python scripts/new_model.py <<LABEL>>` where <<LABEL>> is the name of the
+Run `python scripts/new_model.py LABEL` where LABEL is the name of the
 model you would like to create.
