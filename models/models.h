@@ -5,8 +5,8 @@
 
 #include "../simagents.h"
 
-model_t evo01_model;
-model_t threegoods_model;
+model_t *build_evo01(void init_f(sim_t), void step_f(sim_t), size_t);
+model_t *build_threegoods(void init_f(sim_t), void step_f(sim_t), size_t);
 
 
 #endif

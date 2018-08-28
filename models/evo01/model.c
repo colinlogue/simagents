@@ -2,14 +2,12 @@
 
 // split into other files for clarity
 #include "params.c"
+#include "declarations.c"
+#include "markets.c"
 
 static int get_n_states() {
   return STOCKPILE_LEVELS * power(TREE_LEVELS, N_TREES) * WALLET_LEVELS;
 };
-
-static int get_n_market_states() {
-  return BUYSELL_LEVELS * STOCKPILE_LEVELS * WALLET_LEVELS;
-}
 
 static size_t get_actiontable_size() {
   return sizeof(uint8_t) * get_n_states() * N_ACTIONS;
@@ -17,7 +15,7 @@ static size_t get_actiontable_size() {
 
 static size_t get_buyselltable_size() {
   return sizeof(uint8_t) * get_n_market_states() * N_MARKET_ACTIONS;
-}
+};
 
 static void init_agents(info_t *info) {
   printf("Initializing agents to random state action values...\n");
@@ -63,18 +61,6 @@ static int get_tree_state(uint8_t tree_age) {
   return min(tree_age, TREE_LEVELS - 1);
 };
 
-static int get_buysell_state(int n_sellers, int n_buyers) {
-  assert(n_sellers > 0 || n_buyers > 0); // don't call if no one in market
-  float ratio = (float)n_sellers / (float)n_buyers;
-  float range1 = 0.1;
-  float range2 = 0.33;
-  if (ratio < 1. - range2) return 0;
-  else if (ratio < 1. - range1) return 1;
-  else if (ratio <= 1. + range1) return 2;
-  else if (ratio <= 1. + range2) return 3;
-  else return 4;
-};
-
 static int food_from_tree(uint8_t tree_age) {
   // returns the amount of food harvested from a tree of a given age
   if (tree_age < 3) return 0;
@@ -110,17 +96,17 @@ static void plant_action(agent_t *agent_ptr) {
 };
 
 static void sell_action(agent_t *agent_ptr, info_t *info) {
-  info->sellers[info->n_sellers] = agent_ptr->id;
-  info->n_sellers++;
+  q_append(info->sellers, agent_ptr, sizeof(*agent_ptr));
 };
 
 static void buy_action(agent_t *agent_ptr, info_t *info) {
-  info->buyers[info->n_buyers] = agent_ptr->id;
-  info->n_buyers++;
+  q_append(info->buyers, agent_ptr, sizeof(*agent_ptr));
 };
 
 
 static int get_agent_state(agent_t *agent_ptr, info_t *info) {
+  // maps each multideminsional state to a unique integer
+  // see the docs for details of how this works
   int state = 0;
   int z = info->n_states; // what should i call this?
   int s = get_stockpile_state(agent_ptr->stats.stockpile);
@@ -156,32 +142,6 @@ static int get_agent_action(agent_t *agent_ptr, info_t *info) {
       n_actions);
 };
 
-static int get_market_state(agent_t *agent_ptr, info_t *info) {
-  int state = 0;
-  int z = info->n_market_states;
-  int s = get_stockpile_state(agent_ptr->stats.stockpile);
-  state += (z /= STOCKPILE_LEVELS) * s;
-  int w = get_wallet_state(agent_ptr->stats.wallet);
-  state += (z /= WALLET_LEVELS)  * w;
-  int bs = get_buysell_state(info->n_sellers, info->n_buyers);
-  state += (z /= BUYSELL_LEVELS) * bs;
-  return state;
-};
-
-static int get_sell_action(agent_t *agent_ptr, info_t *info) {
-  uint8_t **table = agent_ptr->selltable;
-  int n_actions = N_MARKET_ACTIONS;
-  return get_action_from_table(agent_ptr, info, table, get_market_state,
-    n_actions);
-};
-
-static int get_buy_action(agent_t *agent_ptr, info_t *info) {
-  uint8_t **table = agent_ptr->buytable;
-  int n_actions = N_MARKET_ACTIONS;
-  return get_action_from_table(agent_ptr, info, table, get_market_state,
-    n_actions);
-};
-
 static void take_action(agent_t *agent_ptr, info_t *info) {
   int action = get_agent_action(agent_ptr, info);
   if (action == 0) {
@@ -205,26 +165,6 @@ static void take_action(agent_t *agent_ptr, info_t *info) {
 static void kill_agent(agent_t *agent_ptr) {
   agent_ptr->stats.is_dead = true;
   agent_ptr->stats.stockpile = 0;
-}
-
-static void buy_and_sell(info_t *info) {
-  int agent_id;
-  int price;
-  int sell_levels[BUYSELL_LEVELS]; // initialize to 0
-  int buy_levels[BUYSELL_LEVELS];
-  // tdl: add action value to agent stats so that don't need separate list
-  for (int i = 0; i < info->n_sellers; i++) {
-    agent_id = info->sellers[i];
-    price = get_sell_action(&(info->agents[agent_id]), info);
-    info->agents[agent_id].stats.buysell_price = price;
-    sell_levels[price]++;
-  }
-  for (int i = 0; i < info->n_buyers; i++) {
-    agent_id = info->buyers[i];
-    price = get_buy_action(&(info->agents[agent_id]), info);
-    info->agents[agent_id].stats.buysell_price = price;
-    buy_levels[price]++;
-  }
 };
 
 static void end_of_step(info_t *info) {
@@ -236,11 +176,9 @@ static void end_of_step(info_t *info) {
     }
     info->agents[idx].stats.stockpile--; // decrease food by 1
     if (info->agents[idx].stats.stockpile <= 0) { // check if anyone starved
-    kill_agent(&(info->agents[idx]));
+      kill_agent(&(info->agents[idx]));
+    }
   }
-  }
-  info->n_sellers = 0;
-  info->n_buyers = 0;
 };
 
 static int get_num_alive(info_t *info) {
@@ -274,17 +212,15 @@ static void sim_generation(info_t *info) {
     sim_step(info);
     info->step++;
   }
-}
+};
 
 static int do_the_thing() {
   srand(1);
 
   info_t info;
   info.agents = malloc(sizeof(agent_t)*N_AGENTS);
-  info.sellers = malloc(sizeof(int)*N_AGENTS);
-  info.n_sellers = 0;
-  info.buyers = malloc(sizeof(int)*N_AGENTS);
-  info.n_buyers = 0;
+  info.sellers = malloc(sizeof(queue_t));
+  info.buyers = malloc(sizeof(queue_t));
   info.gen = 0;
   info.step = 0;
   info.n_states = get_n_states();
@@ -308,4 +244,9 @@ static void init_f(sim_t *sim_p) {
 static void step_f(sim_t *sim_p) {
 };
 
-extern model_t evo01_model = {init_f, step_f, sizeof(agent_t)};
+extern model_t *build_evo01_model() {
+  model_t *evo01 = malloc()
+  evo01
+};
+
+extern model_t *build_evo01(void init_f(sim_t), void step_f(sim_t), size_t);

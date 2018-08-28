@@ -1,5 +1,5 @@
 CC = gcc -std=gnu11
-UTILS = intmath
+UTILS = intmath queue
 OBJECTS = $(foreach util, $(UTILS), ../../bin/utils/$(util).o)
 CFLAGS = -Wall -ggdb -c
 

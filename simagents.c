@@ -5,7 +5,7 @@
 #include "simagents.h"
 
 
-void runSimulation(sim_t *sim_p) {
+void run_simulation(sim_t *sim_p) {
   /** /brief Handles the looping of a simulation for a number of turns
     *        as specified in the sim_t.
     *
@@ -19,6 +19,14 @@ void runSimulation(sim_t *sim_p) {
     sim_p->sim.step_f(sim_p);
     sim_p->current_step++;
   };
+};
+
+model_t *build_model(void *init_f, void *step_f, size_t agent_size) {
+  model_t *new_model = malloc(sizeof(model_t));
+  new_model->init_f = init_f;
+  new_model->step_f = step_f;
+  new_model->agent_size = agent_size;
+  return new_model;
 };
 
 int main(int argc, char **argv) {
@@ -45,5 +53,5 @@ int main(int argc, char **argv) {
   simu.agents = malloc(simu.sim.agent_size * simu.n_agents);
   
   
-  runSimulation(&simu);
+  run_simulation(&simu);
 };

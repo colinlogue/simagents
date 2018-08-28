@@ -10,6 +10,7 @@
 #include <stdbool.h>
 #include "../../simagents.h"
 #include "../../utils/intmath.h"
+#include "../../utils/queue.h"
 #include "types.h"
 
 #endif

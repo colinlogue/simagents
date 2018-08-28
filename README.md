@@ -13,3 +13,8 @@ TDL: better param passing from shell
 There is a python script for initializing a new model in the models directory.
 Run `python scripts/new_model.py <<LABEL>>` where <<LABEL>> is the name of the
 model you would like to create.
+
+## Running a simulation
+The `main` function parses the command line argument to obtain the name of the
+model to be used (passed to a hash dict to return the model's build function)
+as well as any parameters passed to the model to override its defaults.

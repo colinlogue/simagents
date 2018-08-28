@@ -8,12 +8,12 @@ def update_models():
 	labels = get_model_labels()
 
 	# add the list of models into the template
-	with open('scripts/models_h_template.h', 'r') as template_f:
+	with open('scripts/templates/models_h_template.h', 'r') as template_f:
 		template = template_f.read()
 
 	add_labels = ''
 	for label in labels:
-		add_labels += 'model_t <<LABEL>>_model;\n'.replace('<<LABEL>>', label)
+		add_labels += 'model_t *build_<<LABEL>>(void init_f(sim_t), void step_f(sim_t), size_t);\n'.replace('<<LABEL>>', label)
 
 	# write to destination file
 	with open('models/models.h', 'w') as dest_f:

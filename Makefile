@@ -11,8 +11,8 @@ all: update $(P)
 
 $(P): $(OBJECTS) $(UTILS)
 
-bin/models/%.o:
-	cd models/$(notdir $(basename $@)) && make
-
 update:
 	python scripts/update_models.py
+
+bin/models/%.o: models/%/model.c
+	cd models/$(notdir $(basename $@)) && make

@@ -1,6 +1,10 @@
 #ifndef EVO01_TYPES_H
 #define EVO01_TYPES_H
 
+#include <stdbool.h>
+#include <stdint.h>
+#include "../../utils/queue.h"
+
 // data types
 typedef struct {
   bool is_dead;
@@ -22,10 +26,8 @@ typedef struct {
 
 typedef struct {
   agent_t *agents;
-  int *sellers;
-  int n_sellers;
-  int *buyers;
-  int n_buyers;
+  queue_t *sellers;
+  queue_t *buyers;
   int gen;
   int step;
   int n_states;

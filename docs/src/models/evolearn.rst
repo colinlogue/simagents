@@ -38,4 +38,55 @@ Agent actions
 
 Selling and buying
 ------------------
-Sellers set the minimum price they will sell for and buyers set the maximum price they will buy for. There are 
+Sellers set the minimum price they will sell for and buyers set the maximum
+price they will buy for. There are 
+
+Quantifying states
+------------------
+
+```
+      ┌───┐     ┌───┐     ┌───┐
+      │ 0 │     │ 0 │  0  │ 0 │  =  0 + 0 + 0
+      │   │  0  │   │     └───┘
+      │   │     │ 1 │     ┌───┐
+      │ 1 │     │   │  1  │ 1 │  =  0 + 0 + 1
+      │   │     └───┘     └───┘
+   0  │   │     ┌───┐  ╴╴╴╴╴╴╴╴
+      │ 2 │     │   │     ┌───┐
+      │   │     │ 2 │  0  │ 2 │  =  0 + 2 + 0
+      │   │  1  │   │     └───┘
+      │ 3 │     │ 3 │     ┌───┐
+      │   │     │   │  1  │ 3 │  =  0 + 2 + 1
+      │   │     └───┘     └───┘
+      └───┘  ╴╴╴╴╴╴╴╴  ╴╴╴╴╴╴╴╴
+      ┌───┐     ┌───┐     ┌───┐
+      │ 4 │     │ 4 │  0  │ 4 │  =  4 + 0 + 0
+      │   │  0  │   │     └───┘
+      │   │     │ 5 │     ┌───┐
+      │ 5 │     │   │  1  │ 5 │  =  4 + 0 + 1
+      │   │     └───┘     └───┘ 
+   1  │   │     ┌───┐  ╴╴╴╴╴╴╴╴ 
+      │ 6 │     │   │     ┌───┐
+      │   │     │ 6 │  0  │ 6 │  =  4 + 2 + 0
+      │   │  1  │   │     └───┘
+      │ 7 │     │ 7 │     ┌───┐
+      │   │     │   │  1  │ 7 │  =  4 + 2 + 1
+      │   │     └───┘     └───┘
+      └───┘  ╴╴╴╴╴╴╴╴  ╴╴╴╴╴╴╴╴
+      ┌───┐     ┌───┐     ┌───┐
+      │ 8 │     │ 8 │  0  │ 8 │  =  8 + 0 + 0
+      │   │  0  │   │     └───┘
+      │   │     │ 9 │     ┌───┐
+      │ 9 │     │   │  1  │ 9 │  =  8 + 0 + 1
+      │   │     └───┘     └───┘
+   2  │   │     ┌───┐  ╴╴╴╴╴╴╴╴
+      │10 │     │   │     ┌───┐
+      │   │     │10 │  0  │10 │  =  8 + 2 + 0
+      │   │  1  │   │     └───┘
+      │11 │     │11 │     ┌───┐
+      │   │     │   │  1  │11 │  =  8 + 2 + 1
+      └───┘     └───┘     └───┘ 
+```
+note: it actually might make more sense to go the other way on this, i.e.
+instead of starting with the total number and dividing it at each level, start
+with 1 and multiply it at each level.

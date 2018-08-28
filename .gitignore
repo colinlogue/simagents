@@ -5,7 +5,6 @@
 *.exe
 *.stackdump
 
-bin/
 venv/
 
 # generated files

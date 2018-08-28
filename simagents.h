@@ -17,4 +17,6 @@ typedef struct {
   int current_step;
 } sim_t;
 
+model_t *build_model(void*, void*, size_t);
+
 #endif
