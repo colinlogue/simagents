@@ -19,3 +19,6 @@ model you would like to create.
 The `main` function parses the command line argument to obtain the name of the
 model to be used (passed to a hash dict to return the model's build function)
 as well as any parameters passed to the model to override its defaults.
+
+1. `init_simulation` processes the command line arguments and returns a `sim_t`.
+2. That `sim_t` is passed to run_simulation, which 

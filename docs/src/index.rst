@@ -9,6 +9,7 @@ Welcome to simagents's documentation!
 .. toctree::
    :maxdepth: 2
    
+   style_guide
    overview
    models/threegoods
    models/evolearn
