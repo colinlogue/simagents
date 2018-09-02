@@ -1,3 +1,7 @@
+/**
+  * Functions for integer math.
+**/
+
 extern int power(int root, int exp) {
   int val = 1;
   for (int i = 0; i < exp; i++) {

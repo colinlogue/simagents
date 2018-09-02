@@ -4,13 +4,12 @@
 typedef struct queue_node {
   struct queue_node *next;
   void *content;
-  size_t content_size;
 } queue_node_t;
 
-typedef struct {
+typedef struct queue {
   queue_node_t *head;
   queue_node_t *tail;
-  int len;
+  size_t len;
 } queue_t;
 
 // functions

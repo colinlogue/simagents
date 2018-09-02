@@ -57,4 +57,8 @@ using the following format:
     return foo;
   }
 
-This mostly follows the documentation guide for numpy, found at: https://docs.scipy.org/doc/numpy/docs/howto_document.html#numpydoc-docstring-guide
+This mostly follows the documentation guide for numpy, found at:
+https://docs.scipy.org/doc/numpy/docs/howto_document.html#numpydoc-docstring-guide
+
+Eventually this should be used to generate a set of sphinx docs, but that will
+require a tool to parse the source text and pull out the documentation.
