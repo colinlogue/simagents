@@ -14,8 +14,11 @@ typedef struct queue {
 
 // functions
 queue_t *q_create();
-void q_append(queue_t*, void*, size_t);
-void q_clear(queue_t*);
-queue_node_t *q_get_nth(queue_t*, int);
+queue_node_t *q_append(queue_t *, void *);
+queue_node_t *q_get_nth(queue_t *, size_t);
+queue_node_t *q_insert_at(queue_t *, void *, size_t);
+void q_destroy(queue_t *);
+void q_delete_at(queue_t *, size_t);
+void q_clear(queue_t *);
 
 #endif
